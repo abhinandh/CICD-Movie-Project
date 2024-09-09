@@ -1,8 +1,11 @@
-from . import app
+from . import movies
 import os
+from flask import Flask
 
 
 def test_movies_endpoint_returns_200():
+    app = Flask(__name__)
+    app.register_blueprint(movies.movies_api, url_prefix="/")
     with app.test_client() as client:
         status_code = os.getenv("FAIL_TEST", 200)
         response = client.get("/movies/")
@@ -10,12 +13,16 @@ def test_movies_endpoint_returns_200():
 
 
 def test_movies_endpoint_returns_json():
+    app = Flask(__name__)
+    app.register_blueprint(movies.movies_api, url_prefix="/")
     with app.test_client() as client:
         response = client.get("/movies/")
         assert response.content_type == "application/json"
 
 
 def test_movies_endpoint_returns_valid_data():
+    app = Flask(__name__)
+    app.register_blueprint(movies.movies_api, url_prefix="/")
     with app.test_client() as client:
         response = client.get("/movies/")
         data = response.get_json()
