@@ -99,8 +99,8 @@ jobs:
         ECR_REPOSITORY: backend
         IMAGE_TAG: build_image
        run: |
-        react_app_url: ${{ secrets.REACT_APP_MOVIE_API_URL }}
-        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG . --build-arg="REACT_APP_MOVIE_API_URL=$react_app_url"
+        REACT_APP_MOVIE_API_URL : http://ac59dd84c3f724ce9a31fb701318f660-2070589123.us-east-1.elb.amazonaws.com
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG . --build-arg="REACT_APP_MOVIE_API_URL=$REACT_APP_MOVIE_API_URL"
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
      - name: Update kube config
